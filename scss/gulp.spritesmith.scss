@@ -1,0 +1,27 @@
+@import "_spritesmith-sample";
+@import "_spritesmith-browser";
+
+.sample {
+    .spritesmith {
+        div {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .fork {
+            @include sprite($sample-fork);
+        }
+
+        .github {
+            @include sprite($sample-github);
+        }
+
+        .twitter {
+            @include sprite($sample-twitter);
+        }
+
+        .chrome {
+            @include sprite($browser-chrome);
+        }
+    }
+}

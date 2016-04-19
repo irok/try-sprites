@@ -1,0 +1,24 @@
+.sample {
+    .postsamples {
+        div {
+            display: inline-block;
+            margin: 10px;
+        }
+
+        .fork {
+            background: url(../images/sample/fork.png);
+        }
+
+        .github {
+            background: url(../images/sample/github.png);
+        }
+
+        .twitter {
+            background: url(../images/sample/twitter.png);
+        }
+
+        .chrome {
+            background: url(../images/browser/chrome.png);
+        }
+    }
+}
