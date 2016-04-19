@@ -30,3 +30,11 @@
   width: 40px;
   height: 40px;
 }
+
+.sample .postsamples .html5 {
+  background: url(../images/html5.png);
+}
+
+.sample .postsamples .css3 {
+  background: url(../images/css3.png);
+}
