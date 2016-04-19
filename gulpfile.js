@@ -19,6 +19,8 @@ gulp.task('default', ['build:scss-with-postcss', 'build:scss-with-spritesmith'])
 
 /**
  * postcss-spritesでCSSスプライトをつくる
+ * デフォルトでは全てのbackground-imageから１つのスプライトを生成してしまうので、
+ * スプライト化するディレクトリを明示し、ディレクトリごとにスプライトが生成されるようにする
  */
 gulp.task('build:scss-with-postcss', function() {
     return gulp.src('scss/postcss-sprites.scss')
@@ -26,9 +28,6 @@ gulp.task('build:scss-with-postcss', function() {
             outputStyle: 'expanded'
         }))
         .pipe(gulp$.postcss([
-            /**
-             * postcss-spritesのAPIは非常に複雑なため、コメントを残しておく
-             */
             sprites({
                 stylesheetPath: 'css/',
                 spritePath: 'images/',
