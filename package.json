@@ -2,7 +2,7 @@
   "name": "try-sprites",
   "version": "1.0.0",
   "description": "",
-  "main": "index.js",
+  "main": "index.html",
   "scripts": {
     "build": "gulp",
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -18,5 +18,9 @@
     "merge-stream": "^1.0.0",
     "postcss": "^5.0.19",
     "postcss-sprites": "^3.1.2"
+  },
+  "engines": {
+    "node": "4.4.2",
+    "npm": "3.8.5"
   }
 }

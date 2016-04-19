@@ -6,15 +6,19 @@ var postcss     = require('postcss');
 var sprites     = require('postcss-sprites').default;
 var updateRule  = require('postcss-sprites').updateRule;
 
+/**
+ * スプライト化したい画像ディレクトリ名 (images/この部分/)
+ */
 var spriteDirs = [
     'sample',
     'browser'
 ];
 
+
 gulp.task('default', ['build:scss-with-postcss', 'build:scss-with-spritesmith']);
 
 /**
- * postcss-sprites を使った例
+ * postcss-spritesでCSSスプライトをつくる
  */
 gulp.task('build:scss-with-postcss', function() {
     return gulp.src('scss/postcss-sprites.scss')
@@ -22,19 +26,32 @@ gulp.task('build:scss-with-postcss', function() {
             outputStyle: 'expanded'
         }))
         .pipe(gulp$.postcss([
+            /**
+             * postcss-spritesのAPIは非常に複雑なため、コメントを残しておく
+             */
             sprites({
                 stylesheetPath: 'css/',
                 spritePath: 'images/',
+                /**
+                 * 対象外のパスを除外する
+                 * これをしないとすべての画像がスプライト化されかねない
+                 */
                 filterBy: function(image) {
                     var dirNames = spriteDirs.join('|');
                     if (image.url.match('images/(?:'+dirNames+')'))
                         return Promise.resolve();
                     return Promise.reject();
                 },
+                /*
+                 * ディレクトリ名でグルーピングする
+                 */
                 groupBy: function(image) {
                     return Promise.resolve(image.url.match(/images\/([^\/]+)\//)[1]);
                 },
                 hooks: {
+                    /**
+                     * 画像サイズに応じてwidthとheightも出力する
+                     */
                     onUpdateRule: function(rule, token, image) {
                         updateRule(rule, token, image);
 
@@ -45,6 +62,10 @@ gulp.task('build:scss-with-postcss', function() {
                             }));
                         });
                     },
+                    /**
+                     * 出力されるスプライト画像ファイル名を変更する
+                     * デフォルトだと sprite.png になってしまうので、グルーピングで指定したディレクトリ名をファイル名に使う
+                     */
                     onSaveSpritesheet: function(opts, groups) {
                         return path.join(opts.spritePath, 'postsprite-' + groups.join('.') + '.png');
                     }
@@ -55,7 +76,8 @@ gulp.task('build:scss-with-postcss', function() {
 })
 
 /**
- * gulp.spritesmith を使った例
+ * gulp.spritesmithでCSSスプライトをつくる
+ * 先にパーシャルファイル（と画像）を作ってからSassをコンパイルする
  */
 gulp.task('build:scss-with-spritesmith', ['create:sprite'], function() {
     return gulp.src('scss/gulp.spritesmith.scss')
