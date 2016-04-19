@@ -1,0 +1,140 @@
+/*
+SCSS variables are information about icon's compiled state, stored under its original file name
+
+.icon-home {
+  width: $icon-home-width;
+}
+
+The large array-like variables contain all information about a single icon
+$icon-home: x y offset_x offset_y width height total_width total_height image_path;
+
+At the bottom of this section, we provide information about the spritesheet itself
+$spritesheet: width height image $spritesheet-sprites;
+*/
+$browser-chrome-name: 'browser-chrome';
+$browser-chrome-x: 0px;
+$browser-chrome-y: 0px;
+$browser-chrome-offset-x: 0px;
+$browser-chrome-offset-y: 0px;
+$browser-chrome-width: 40px;
+$browser-chrome-height: 40px;
+$browser-chrome-total-width: 120px;
+$browser-chrome-total-height: 80px;
+$browser-chrome-image: '../images/spritesmith-browser.png';
+$browser-chrome: (0px, 0px, 0px, 0px, 40px, 40px, 120px, 80px, '../images/spritesmith-browser.png', 'browser-chrome', );
+$browser-firefox-name: 'browser-firefox';
+$browser-firefox-x: 40px;
+$browser-firefox-y: 0px;
+$browser-firefox-offset-x: -40px;
+$browser-firefox-offset-y: 0px;
+$browser-firefox-width: 40px;
+$browser-firefox-height: 40px;
+$browser-firefox-total-width: 120px;
+$browser-firefox-total-height: 80px;
+$browser-firefox-image: '../images/spritesmith-browser.png';
+$browser-firefox: (40px, 0px, -40px, 0px, 40px, 40px, 120px, 80px, '../images/spritesmith-browser.png', 'browser-firefox', );
+$browser-ie-name: 'browser-ie';
+$browser-ie-x: 0px;
+$browser-ie-y: 40px;
+$browser-ie-offset-x: 0px;
+$browser-ie-offset-y: -40px;
+$browser-ie-width: 40px;
+$browser-ie-height: 40px;
+$browser-ie-total-width: 120px;
+$browser-ie-total-height: 80px;
+$browser-ie-image: '../images/spritesmith-browser.png';
+$browser-ie: (0px, 40px, 0px, -40px, 40px, 40px, 120px, 80px, '../images/spritesmith-browser.png', 'browser-ie', );
+$browser-opera-name: 'browser-opera';
+$browser-opera-x: 40px;
+$browser-opera-y: 40px;
+$browser-opera-offset-x: -40px;
+$browser-opera-offset-y: -40px;
+$browser-opera-width: 40px;
+$browser-opera-height: 40px;
+$browser-opera-total-width: 120px;
+$browser-opera-total-height: 80px;
+$browser-opera-image: '../images/spritesmith-browser.png';
+$browser-opera: (40px, 40px, -40px, -40px, 40px, 40px, 120px, 80px, '../images/spritesmith-browser.png', 'browser-opera', );
+$browser-safari-name: 'browser-safari';
+$browser-safari-x: 80px;
+$browser-safari-y: 0px;
+$browser-safari-offset-x: -80px;
+$browser-safari-offset-y: 0px;
+$browser-safari-width: 40px;
+$browser-safari-height: 40px;
+$browser-safari-total-width: 120px;
+$browser-safari-total-height: 80px;
+$browser-safari-image: '../images/spritesmith-browser.png';
+$browser-safari: (80px, 0px, -80px, 0px, 40px, 40px, 120px, 80px, '../images/spritesmith-browser.png', 'browser-safari', );
+$spritesheet-width: 120px;
+$spritesheet-height: 80px;
+$spritesheet-image: '../images/spritesmith-browser.png';
+$spritesheet-sprites: ($browser-chrome, $browser-firefox, $browser-ie, $browser-opera, $browser-safari, );
+$spritesheet: (120px, 80px, '../images/spritesmith-browser.png', $spritesheet-sprites, );
+
+/*
+The provided mixins are intended to be used with the array-like variables
+
+.icon-home {
+  @include sprite-width($icon-home);
+}
+
+.icon-email {
+  @include sprite($icon-email);
+}
+
+Example usage in HTML:
+
+`display: block` sprite:
+<div class="icon-home"></div>
+
+To change `display` (e.g. `display: inline-block;`), we suggest using a common CSS class:
+
+// CSS
+.icon {
+  display: inline-block;
+}
+
+// HTML
+<i class="icon icon-home"></i>
+*/
+@mixin sprite-width($sprite) {
+  width: nth($sprite, 5);
+}
+
+@mixin sprite-height($sprite) {
+  height: nth($sprite, 6);
+}
+
+@mixin sprite-position($sprite) {
+  $sprite-offset-x: nth($sprite, 3);
+  $sprite-offset-y: nth($sprite, 4);
+  background-position: $sprite-offset-x  $sprite-offset-y;
+}
+
+@mixin sprite-image($sprite) {
+  $sprite-image: nth($sprite, 9);
+  background-image: url(#{$sprite-image});
+}
+
+@mixin sprite($sprite) {
+  @include sprite-image($sprite);
+  @include sprite-position($sprite);
+  @include sprite-width($sprite);
+  @include sprite-height($sprite);
+}
+
+/*
+The `sprites` mixin generates identical output to the CSS template
+  but can be overridden inside of SCSS
+
+@include sprites($spritesheet-sprites);
+*/
+@mixin sprites($sprites) {
+  @each $sprite in $sprites {
+    $sprite-name: nth($sprite, 10);
+    .#{$sprite-name} {
+      @include sprite($sprite);
+    }
+  }
+}

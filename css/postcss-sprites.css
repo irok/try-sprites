@@ -1,0 +1,32 @@
+.sample .postsamples div {
+  display: inline-block;
+  margin: 10px;
+}
+
+.sample .postsamples .fork {
+  background-image: url(../images/postsprite-sample.png);
+  background-position: 0px 0px;
+  width: 32px;
+  height: 32px;
+}
+
+.sample .postsamples .github {
+  background-image: url(../images/postsprite-sample.png);
+  background-position: -32px 0px;
+  width: 32px;
+  height: 32px;
+}
+
+.sample .postsamples .twitter {
+  background-image: url(../images/postsprite-sample.png);
+  background-position: 0px -32px;
+  width: 32px;
+  height: 32px;
+}
+
+.sample .postsamples .chrome {
+  background-image: url(../images/postsprite-browser.png);
+  background-position: 0px 0px;
+  width: 40px;
+  height: 40px;
+}
